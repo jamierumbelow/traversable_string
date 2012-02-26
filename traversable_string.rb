@@ -16,6 +16,15 @@ module TraversableString
   def read characters
     forward characters
   end
+
+  def backward characters
+    if (@char - characters) >= 0
+      @char -= characters
+      char
+    else
+      false
+    end
+  end
 end
 
 class TraversableStringTest < MiniTest::Unit::TestCase
@@ -28,15 +37,23 @@ class TraversableStringTest < MiniTest::Unit::TestCase
     assert_equal 'H', @string.char
   end
 
-  def test_forward_moves_char_pointer_forward_by_x
+  def test_traversal_traverses_string_effectively
+    # Forward!
     @string.forward 1 and assert_equal 'e', @string.char
     @string.forward 1 and assert_equal 'l', @string.char
     @string.forward 2 and assert_equal ' ', @string.char
     @string.forward 5 and assert_equal '!', @string.char
+
+    # Run away!
+    @string.backward 2 and assert_equal 'a', @string.char
+    @string.backward 1 and assert_equal 'e', @string.char
+    @string.backward 4 and assert_equal 'l', @string.char
+    @string.backward 2 and assert_equal 'H', @string.char
   end
 
-  def test_forward_returns_false_when_it_reaches_the_end_of_the_string
+  def test_forward_and_backward_return_false_when_they_reach_the_end_of_the_string
     assert_equal false, @string.forward(28)
+    assert_equal false, @string.backward(29)
   end
 
   def test_read_is_a_synonym_for_forward
