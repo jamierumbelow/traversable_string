@@ -23,4 +23,12 @@ module TraversableString
       false
     end
   end
+
+  def forward_until subchar
+    while (char = forward(1)) != subchar; end
+  end
+
+  def backward_until subchar
+    while (char = backward(1)) != subchar; end
+  end
 end

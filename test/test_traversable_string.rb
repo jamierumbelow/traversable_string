@@ -39,4 +39,12 @@ class TraversableStringTest < MiniTest::Unit::TestCase
     assert_equal 'e', @string.forward(1)
     assert_equal 'H', @string.backward(1)
   end
+
+  def test_forward_and_backward_until_traverses_through_a_string_until_a_subchar
+    @string.forward_until '!'
+    assert_equal '!', @string.char
+
+    @string.backward_until 'l'
+    assert_equal 'l', @string.char
+  end
 end
