@@ -3,8 +3,7 @@ require 'traversable_string'
 
 class TraversableStringTest < MiniTest::Unit::TestCase
   def setup
-    @string = 'Hell yeah! I LOVE <3 GitHub.'
-    @string.send :extend, TraversableString
+    @string = TraversableString.new 'Hell yeah! I LOVE <3 GitHub.'
   end
 
   def test_internal_char_pointer_is_at_0_initially
