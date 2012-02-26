@@ -72,13 +72,21 @@ class TraversableString < String
   # We can move forward and backward through the string until we find a 
   # subcharacter too. This is extremely useful for parsing stuff. We simply 
   # loop through the string (forward or backward), character by character, 
-  # until we match it, at which point we stop.
+  # until we match it, at which point we stop and return the snippet.
   def forward_until subchar
-    while (char = forward(1)) != subchar; end
+    snippet = ''
+    while (char = forward(1)) != subchar
+      snippet << char
+    end
+    snippet
   end
 
   def backward_until subchar
-    while (char = backward(1)) != subchar; end
+    snippet = ''
+    while (char = backward(1)) != subchar
+      snippet = char + snippet
+    end
+    snippet
   end
 end
 

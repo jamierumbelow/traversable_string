@@ -46,4 +46,11 @@ class TraversableStringTest < MiniTest::Unit::TestCase
     @string.backward_until 'l'
     assert_equal 'l', @string.char
   end
+
+  def test_forward_and_backward_until_returns_snippet_between_now_and_then
+    assert_equal 'ell yeah', @string.forward_until('!')
+    assert_equal ' I LOVE ', @string.forward_until('<')
+    assert_equal ' I LOVE ', @string.backward_until('!')
+    assert_equal 'ell yeah', @string.backward_until('H')
+  end
 end
