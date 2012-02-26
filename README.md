@@ -1,5 +1,7 @@
 # TraversableString
 
+[![Build Status](https://secure.travis-ci.org/jamierumbelow/traversable_string.png?branch=master)](http://travis-ci.org/jamierumbelow/traversable_string)
+
 `TraversableString` is a *totally awesome* subclass of String with a bunch of cool methods that make it easier to traverse a string character by character.
 
 It can be used for all kinds of cool stuff, like, for example:
