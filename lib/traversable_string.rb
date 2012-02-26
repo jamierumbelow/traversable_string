@@ -39,14 +39,12 @@ class TraversableString < String
 
   #### Traversal
 
-  # We can move forward by an arbitrary number of characters.
+  # We can move forward by an arbitrary number of characters,
+  # increase our internal pointer by the number of characters,
+  # and either return the character or `false` if we've reached
+  # the end of the string.
   def forward characters
-
-    # Increase our internal pointer by the number of characters
     @char += characters
-
-    # and either return the character or `false` if we've reached
-    # the end of the string.
     char || false
   end
 
@@ -57,20 +55,15 @@ class TraversableString < String
   end
 
   # We can move backward by an arbitrary number of characters too.
+  # It's important to check that we can move backward, otherwise
+  # we'll be passing `String` a negative number, and we'll wrap round.
+  # So, we decrease our internal pointer -- since we know that we're able to move 
+  # backward, and that the current character is inherent to our traversal of the string, 
+  # we can return it. Otherwise, we'll return false.
   def backward characters
-
-    # It's important to check that we can move backward, otherwise
-    # we'll be passing `String` a negative number, and we'll wrap round.
     if (@char - characters) >= 0
-
-      # Decrease our internal pointer
       @char -= characters
-
-      # Since we know that we're able to move backward, and that the current
-      # character is inherent to our traversal of the string, we can return it.
       char
-
-    # Otherwise, let's return false
     else
       false
     end

@@ -1,0 +1,60 @@
+<!DOCTYPE html>  <html> <head>   <title>traversable_string.rb</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               traversable_string.rb             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p><strong>TraversableString</strong> is a subclass of String with a bunch of cool
+methods that make it easier to traverse a string, including the ability to 
+move forward and backward by x characters, as well as the ability to 
+move forward/backward until a specific sub-character.</p>
+
+<p>You can install <strong>TraversableString</strong> with Rubygems:</p>
+
+<pre><code>$ gem install traversable_string
+</code></pre>
+
+<p>Then, require it:</p>
+
+<pre><code>require 'traversable_string'
+</code></pre>
+
+<p>Then, you simply create a new instance of <code>TraversableString</code> somewhere
+in your Ruby script and away you go:</p>
+
+<pre><code>source = TraversableString.new 'Hell yeah! I LOVE &lt;3 GitHub.'
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Away we go. Subclass <code>String</code> so that a <code>TraversableString</code> acts just
+like a normal string when being used.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">class</span> <span class="nc">TraversableString</span> <span class="o">&lt;</span> <span class="nb">String</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h3>Initialisation</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>We hand our passed string literal to the <code>initialize</code> method of
+the parent <code>String</code> class. Then, we set our internal <code>@char</code> counter
+to track the current position in the string.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">super</span>
+    <span class="vi">@char</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">end</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Let's define a simple getter so that we can access the current
+character easily.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">def</span> <span class="nf">char</span>
+    <span class="nb">self</span><span class="o">[</span><span class="vi">@char</span><span class="o">]</span>
+  <span class="k">end</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h3>Traversal</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>We can move forward by an arbitrary number of characters,
+increase our internal pointer by the number of characters,
+and either return the character or <code>false</code> if we've reached
+the end of the string.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">def</span> <span class="nf">forward</span> <span class="n">characters</span>
+    <span class="vi">@char</span> <span class="o">+=</span> <span class="n">characters</span>
+    <span class="n">char</span> <span class="o">||</span> <span class="kp">false</span>
+  <span class="k">end</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>We can use <code>read</code> instead of forward if we like. This is mainly
+to mirror the API found in <code>StringIO</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">def</span> <span class="nf">read</span> <span class="n">characters</span>
+    <span class="n">forward</span> <span class="n">characters</span>
+  <span class="k">end</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>We can move backward by an arbitrary number of characters too.
+It's important to check that we can move backward, otherwise
+we'll be passing <code>String</code> a negative number, and we'll wrap round.
+So, we decrease our internal pointer -- since we know that we're able to move 
+backward, and that the current character is inherent to our traversal of the string, 
+we can return it. Otherwise, we'll return false.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">def</span> <span class="nf">backward</span> <span class="n">characters</span>
+    <span class="k">if</span> <span class="p">(</span><span class="vi">@char</span> <span class="o">-</span> <span class="n">characters</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+      <span class="vi">@char</span> <span class="o">-=</span> <span class="n">characters</span>
+      <span class="n">char</span>
+    <span class="k">else</span>
+      <span class="kp">false</span>
+    <span class="k">end</span>
+  <span class="k">end</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>We can move forward and backward through the string until we find a 
+subcharacter too. This is extremely useful for parsing stuff. We simply 
+loop through the string (forward or backward), character by character, 
+until we match it, at which point we stop.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">def</span> <span class="nf">forward_until</span> <span class="n">subchar</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">char</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">!=</span> <span class="n">subchar</span><span class="p">;</span> <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">backward_until</span> <span class="n">subchar</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">char</span> <span class="o">=</span> <span class="n">backward</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">!=</span> <span class="n">subchar</span><span class="p">;</span> <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>And there you have it.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
