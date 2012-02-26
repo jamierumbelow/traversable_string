@@ -26,5 +26,8 @@ class TraversableStringTest < MiniTest::Unit::TestCase
 
   def test_read_moves_char_pointer_forward_by_x
     @string.read(1) and assert_equal 'e', @string.char
+    @string.read(1) and assert_equal 'l', @string.char
+    @string.read(2) and assert_equal ' ', @string.char
+    @string.read(5) and assert_equal '!', @string.char
   end
 end
