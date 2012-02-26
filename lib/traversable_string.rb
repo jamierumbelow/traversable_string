@@ -1,61 +1,85 @@
-# TraversableString is a subclass of String with a 
-# bunch of cool methods that make it easier to 
-# traverse the string, including the ability to 
-# move forward and backward by x characters, as 
-# well as the ability to move forward/backward 
-# until a specific sub-character.
+# **TraversableString** is a subclass of String with a bunch of cool
+# methods that make it easier to traverse a string, including the ability to 
+# move forward and backward by x characters, as well as the ability to 
+# move forward/backward until a specific sub-character.
 #
-# Author::    Jamie Rumbelow  (http://jamierumbelow.net)
-# Copyright:: Copyright (c) 2012 Jamie Rumbelow
+# You can install **TraversableString** with Rubygems:
 #
-# Copyright (c) 2012 Jamie Rumbelow <http://jamierumbelow.net>
+#     $ gem install traversable_string
 #
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
+# Then, require it:
+# 
+#     require 'traversable_string'
 #
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
+# Then, you simply create a new instance of `TraversableString` somewhere
+# in your Ruby script and away you go:
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+#     source = TraversableString.new 'Hell yeah! I LOVE <3 GitHub.'
+#
 
+# Away we go. Subclass `String` so that a `TraversableString` acts just
+# like a normal string when being used.
 class TraversableString < String
+
+  #### Initialisation
+
+  # We hand our passed string literal to the `initialize` method of
+  # the parent `String` class. Then, we set our internal `@char` counter
+  # to track the current position in the string.
   def initialize(string)
     super
     @char = 0
   end
 
+  # Let's define a simple getter so that we can access the current
+  # character easily.
   def char
     self[@char]
   end
 
+  #### Traversal
+
+  # We can move forward by an arbitrary number of characters.
   def forward characters
+
+    # Increase our internal pointer by the number of characters
     @char += characters
+
+    # and either return the character or `false` if we've reached
+    # the end of the string.
     char || false
   end
 
+  # We can use `read` instead of forward if we like. This is mainly
+  # to mirror the API found in `StringIO`.
   def read characters
     forward characters
   end
 
+  # We can move backward by an arbitrary number of characters too.
   def backward characters
+
+    # It's important to check that we can move backward, otherwise
+    # we'll be passing `String` a negative number, and we'll wrap round.
     if (@char - characters) >= 0
+
+      # Decrease our internal pointer
       @char -= characters
+
+      # Since we know that we're able to move backward, and that the current
+      # character is inherent to our traversal of the string, we can return it.
       char
+
+    # Otherwise, let's return false
     else
       false
     end
   end
 
+  # We can move forward and backward through the string until we find a 
+  # subcharacter too. This is extremely useful for parsing stuff. We simply 
+  # loop through the string (forward or backward), character by character, 
+  # until we match it, at which point we stop.
   def forward_until subchar
     while (char = forward(1)) != subchar; end
   end
@@ -64,3 +88,5 @@ class TraversableString < String
     while (char = backward(1)) != subchar; end
   end
 end
+
+# And there you have it.
