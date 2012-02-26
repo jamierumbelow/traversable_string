@@ -34,4 +34,9 @@ class TraversableStringTest < MiniTest::Unit::TestCase
     @string.read 1
     assert_equal 'e', @string.char
   end
+
+  def test_forward_and_backward_return_the_character
+    assert_equal 'e', @string.forward(1)
+    assert_equal 'H', @string.backward(1)
+  end
 end
