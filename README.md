@@ -1,3 +1,5 @@
+# TraversableString
+
 `TraversableString` is a *totally awesome* subclass of String with a bunch of cool methods that make it easier to traverse a string character by character.
 
 It can be used for all kinds of cool stuff, like, for example:
