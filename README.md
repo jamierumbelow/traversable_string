@@ -18,21 +18,40 @@ Install it with Rubygems!
 
 Create a new instance of `TraversableString`, passing through the string to traverse as a `String` literal:
 
-	source = TraversableString.new 'Hell yeah! I LOVE <3 GitHub.'
+```ruby
+source = TraversableString.new 'Hell yeah! I LOVE <3 GitHub.'
+```
 
 You can then traverse forward and backward through the string using the appropriately named methods:
 
-	source.forward 2 # l
-	source.forward 7 # !
-	source.backward 4 # y
+```ruby
+source.forward 2 # l
+source.forward 7 # !
+source.backward 4 # y
+```
 
 You can fetch the current character with the `char` method:
 
-	source.char # y
+```ruby
+source.char # y
+```
 
 Jump to the first occurance of a string:
 
-	source.forward_until '<'
+```ruby
+source.forward_until '<'
+```
+
+## Running the tests
+
+I'm using [MiniTest](https://github.com/seattlerb/minitest) for the test suite, so running the tests is as simple as running `ruby` on the test file. Remember to include the **lib** directory:
+
+	$ ruby -Ilib test/test_traversable_string.rb
+
+However, I much prefer the [turn](http://rubygems.org/gems/turn) gem. It's prettier and much more useful:
+
+	$ gem install turn
+	$ turn -Ilib test/test_traversable_string.rb
 
 ## License
 
