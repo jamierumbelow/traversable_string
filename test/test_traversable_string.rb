@@ -52,5 +52,8 @@ class TraversableStringTest < MiniTest::Unit::TestCase
     assert_equal ' I LOVE ', @string.forward_until('<')
     assert_equal ' I LOVE ', @string.backward_until('!')
     assert_equal 'ell yeah', @string.backward_until('H')
+
+    assert_equal 'Hell yeah!', @string.forward_until('!', true)
+    assert_equal 'Hell yeah!', @string.backward_until('H', true)
   end
 end

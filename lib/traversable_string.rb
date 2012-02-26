@@ -73,20 +73,24 @@ class TraversableString < String
   # subcharacter too. This is extremely useful for parsing stuff. We simply 
   # loop through the string (forward or backward), character by character, 
   # until we match it, at which point we stop and return the snippet.
-  def forward_until subchar
-    snippet = ''
+  #
+  # We might also want to return the current and ultimate character too,
+  # so let's give the user that option. That's what the `bookend` parameter
+  # is for.
+  def forward_until subchar, bookend = false
+    snippet = bookend ? char : ''
     while (char = forward(1)) != subchar
       snippet << char
     end
-    snippet
+    snippet + (bookend ? char : '')
   end
 
-  def backward_until subchar
-    snippet = ''
+  def backward_until subchar, bookend = false
+    snippet = bookend ? char : ''
     while (char = backward(1)) != subchar
       snippet = char + snippet
     end
-    snippet
+    (bookend ? char : '') + snippet
   end
 end
 
