@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = "traversable_string"
-  spec.version = '1.0.0'
+  spec.version = '1.0.0-dev'
   spec.summary = "Traverse strings like a boss"
   spec.require_path = 'lib/'
   spec.files = Dir['lib/*.rb']
