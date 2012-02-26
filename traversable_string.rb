@@ -8,9 +8,13 @@ module TraversableString
     end
   end
 
-  def read characters
+  def forward characters
     @char += characters
     char || false
+  end
+
+  def read characters
+    forward characters
   end
 end
 
@@ -24,14 +28,19 @@ class TraversableStringTest < MiniTest::Unit::TestCase
     assert_equal 'H', @string.char
   end
 
-  def test_read_moves_char_pointer_forward_by_x
-    @string.read(1) and assert_equal 'e', @string.char
-    @string.read(1) and assert_equal 'l', @string.char
-    @string.read(2) and assert_equal ' ', @string.char
-    @string.read(5) and assert_equal '!', @string.char
+  def test_forward_moves_char_pointer_forward_by_x
+    @string.forward 1 and assert_equal 'e', @string.char
+    @string.forward 1 and assert_equal 'l', @string.char
+    @string.forward 2 and assert_equal ' ', @string.char
+    @string.forward 5 and assert_equal '!', @string.char
   end
 
-  def test_read_returns_false_when_it_reaches_the_end_of_the_string
-    assert_equal false, @string.read(28)
+  def test_forward_returns_false_when_it_reaches_the_end_of_the_string
+    assert_equal false, @string.forward(28)
+  end
+
+  def test_read_is_a_synonym_for_forward
+    @string.read 1
+    assert_equal 'e', @string.char
   end
 end
