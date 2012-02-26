@@ -10,7 +10,7 @@ module TraversableString
 
   def read characters
     @char += characters
-    char
+    char || false
   end
 end
 
@@ -29,5 +29,9 @@ class TraversableStringTest < MiniTest::Unit::TestCase
     @string.read(1) and assert_equal 'l', @string.char
     @string.read(2) and assert_equal ' ', @string.char
     @string.read(5) and assert_equal '!', @string.char
+  end
+
+  def test_read_returns_false_when_it_reaches_the_end_of_the_string
+    assert_equal false, @string.read(28)
   end
 end
